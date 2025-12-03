@@ -1,6 +1,9 @@
 package com.example.interview.repository
 
+import com.example.interview.model.Comment
+import com.example.interview.model.Pano
 import com.example.interview.model.Project
+import com.example.interview.model.Room
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +24,10 @@ class ProjectRepository {
      */
     val projects: StateFlow<List<Project>> = _projects.asStateFlow()
 
+    init {
+        populateSampleData()
+    }
+
     /**
      * Saves or updates a project. If a project with the same ID exists, it is replaced.
      * If it's a new project, it is added to the list.
@@ -38,5 +45,36 @@ class ProjectRepository {
         } else {
             currentProjects + project
         }
+    }
+
+    private fun populateSampleData() {
+        // Sample Project 1: Water Damage Assessment
+        val sampleProject1 = Project.make(
+            name = "123 Main St - Water Damage",
+            id = "sample-project-1"
+        ).let { project ->
+            val room1 = Room.make(name = "Living Room", id = "room-1")
+                .copyBySettingPano(Pano(id = "pano-1", imageData = byteArrayOf(1, 2, 3)))
+                .copyByAddingComment(Comment(id = "comment-1", text = "Water stain visible on ceiling"))
+                .copyByAddingComment(Comment(id = "comment-2", text = "Carpet is damp near window"))
+
+            val room2 = Room.make(name = "Kitchen", id = "room-2")
+                .copyByAddingComment(Comment(id = "comment-3", text = "Under sink damage observed"))
+
+            val room3 = Room.make(name = "Master Bedroom", id = "room-3")
+
+            project
+                .copyByAddingRoom(room1)
+                .copyByAddingRoom(room2)
+                .copyByAddingRoom(room3)
+        }
+
+        // Sample Project 2: Empty project for testing
+        val sampleProject2 = Project.make(
+            name = "456 Oak Ave - Inspection",
+            id = "sample-project-2"
+        )
+
+        _projects.value = listOf(sampleProject1, sampleProject2)
     }
 }
