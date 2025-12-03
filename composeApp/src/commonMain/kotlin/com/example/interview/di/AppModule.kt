@@ -3,6 +3,7 @@ package com.example.interview.di
 import com.example.interview.repository.ProjectRepository
 import com.example.interview.screen.projectlist.ProjectListViewModel
 import com.example.interview.screen.projectdetail.ProjectDetailViewModel
+import com.example.interview.screen.roomdetail.RoomDetailViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -25,6 +26,14 @@ val appModule = module {
 
     viewModel { parameters ->
         ProjectDetailViewModel(
+            savedStateHandle = parameters.get(),
+            navigator = get(),
+            projectRepository = get()
+        )
+    }
+
+    viewModel { parameters ->
+        RoomDetailViewModel(
             savedStateHandle = parameters.get(),
             navigator = get(),
             projectRepository = get()

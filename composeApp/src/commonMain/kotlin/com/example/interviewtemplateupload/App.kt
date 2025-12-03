@@ -12,6 +12,7 @@ import com.example.interview.navigation.Navigator
 import com.example.interview.navigation.NavigatorImpl
 import com.example.interview.screen.projectlist.ProjectListScreen
 import com.example.interview.screen.projectdetail.ProjectDetailScreen
+import com.example.interview.screen.roomdetail.RoomDetailScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.dsl.module
@@ -42,6 +43,9 @@ fun App() {
                 }
                 composable<Destination.ProjectDetail> {
                     ProjectDetailScreen()
+                }
+                composable<Destination.RoomDetail> {
+                    RoomDetailScreen()
                 }
                 // Other destinations will be added in later phases
             }
