@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=InterviewTemplateUpload
+PRODUCT_BUNDLE_IDENTIFIER=com.example.interviewtemplateupload.InterviewTemplateUpload$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
