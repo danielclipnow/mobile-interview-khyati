@@ -1,22 +1,46 @@
 package com.example.interviewtemplateupload
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.interview.di.appModule
+import com.example.interview.navigation.Destination
+import com.example.interview.navigation.Navigator
+import com.example.interview.navigation.NavigatorImpl
+import com.example.interview.screen.projectlist.ProjectListScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
+import org.koin.dsl.module
 
 @Composable
 @Preview
 fun App() {
+    val navController = rememberNavController()
+    val navigator = remember(navController) { NavigatorImpl(navController) }
+
+    // Create a module that provides Navigator
+    val navigationModule = remember(navigator) {
+        module {
+            single<Navigator> { navigator }
+        }
+    }
+
     KoinApplication(application = {
-        modules(appModule)
+        modules(appModule, navigationModule)
     }) {
         MaterialTheme {
-            // Navigation will be set up in later phases
-            // For now, just show a placeholder
-            Text("Interview App")
+            NavHost(
+                navController = navController,
+                startDestination = Destination.ProjectList
+            ) {
+                composable<Destination.ProjectList> {
+                    ProjectListScreen()
+                }
+                // Other destinations will be added in later phases
+            }
         }
     }
 }
