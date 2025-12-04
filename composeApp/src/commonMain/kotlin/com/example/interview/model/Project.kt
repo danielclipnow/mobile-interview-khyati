@@ -35,6 +35,17 @@ data class Project(
         })
     }
 
+    fun copyByRemovingPanoFromRoom(roomId: String): Project {
+        return copy(rooms = rooms.map { room ->
+            if (room.id == roomId) room.copy(pano = null)
+            else room
+        })
+    }
+
+    fun copyByUpdatingName(name: String): Project {
+        return copy(name = name)
+    }
+
     companion object {
         @OptIn(ExperimentalUuidApi::class)
         fun make(name: String, id: String = Uuid.random().toString()): Project {

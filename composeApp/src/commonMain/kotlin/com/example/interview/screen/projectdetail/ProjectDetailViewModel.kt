@@ -28,6 +28,7 @@ class ProjectDetailViewModel(
     sealed class Action {
         data object AddRoom : Action()
         data class SelectRoom(val roomId: String) : Action()
+        data object EditProject : Action()
         data object GoBack : Action()
     }
 
@@ -58,6 +59,12 @@ class ProjectDetailViewModel(
                         projectId = projectId,
                         roomId = action.roomId
                     ),
+                    from = destination
+                )
+            }
+            Action.EditProject -> {
+                navigator.navigate(
+                    to = Destination.EditProject(projectId = projectId),
                     from = destination
                 )
             }

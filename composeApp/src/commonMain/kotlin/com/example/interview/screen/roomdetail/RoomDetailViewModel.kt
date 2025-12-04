@@ -30,6 +30,7 @@ class RoomDetailViewModel(
 
     sealed class Action {
         data class AddPano(val imageData: ByteArray) : Action()
+        data object RemovePano : Action()
         data object AddComment : Action()
         data object EditRoom : Action()
         data object GoBack : Action()
@@ -57,6 +58,11 @@ class RoomDetailViewModel(
                 val project = projectRepository.projects.value.find { it.id == projectId } ?: return
                 val pano = Pano(id = Uuid.random().toString(), imageData = action.imageData)
                 val updatedProject = project.copyBySettingPanoToRoom(roomId, pano)
+                projectRepository.save(updatedProject)
+            }
+            Action.RemovePano -> {
+                val project = projectRepository.projects.value.find { it.id == projectId } ?: return
+                val updatedProject = project.copyByRemovingPanoFromRoom(roomId)
                 projectRepository.save(updatedProject)
             }
             Action.AddComment -> {

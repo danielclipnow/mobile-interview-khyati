@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +32,11 @@ fun ProjectDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = { viewModel.send(ProjectDetailViewModel.Action.GoBack) }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { viewModel.send(ProjectDetailViewModel.Action.EditProject) }) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit Project")
                     }
                 }
             )

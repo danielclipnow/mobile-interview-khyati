@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -63,6 +64,9 @@ fun RoomDetailScreen(
                         onAddPano = {
                             // For simplicity, add dummy pano data
                             viewModel.send(RoomDetailViewModel.Action.AddPano(byteArrayOf(1, 2, 3)))
+                        },
+                        onRemovePano = {
+                            viewModel.send(RoomDetailViewModel.Action.RemovePano)
                         }
                     )
                 }
@@ -106,7 +110,8 @@ fun RoomDetailScreen(
 @Composable
 private fun PanoSection(
     hasPano: Boolean,
-    onAddPano: () -> Unit
+    onAddPano: () -> Unit,
+    onRemovePano: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -131,6 +136,12 @@ private fun PanoSection(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text("360° Panorama Added")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedButton(onClick = onRemovePano) {
+                            Icon(Icons.Default.Delete, contentDescription = null)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Remove")
+                        }
                     }
                 }
             } else {

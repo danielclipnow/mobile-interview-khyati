@@ -26,4 +26,7 @@ sealed class Destination {
         val projectId: String,
         val roomId: String? = null // null = add mode, non-null = edit mode
     ) : Destination()
+
+    @Serializable
+    data class EditProject(val projectId: String) : Destination()
 }
