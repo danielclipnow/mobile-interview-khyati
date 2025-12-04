@@ -11,7 +11,6 @@ import com.example.interview.navigation.Navigator
 import com.example.interview.repository.ProjectRepository
 import com.example.interview.viewmodel.AndroidViewModel
 import com.example.interview.viewmodel.ViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -56,8 +55,7 @@ class ProjectListViewModel(
             is Action.UploadProject -> {
                 val project = projectRepository.projects.value.find { it.id == action.projectId } ?: return
                 viewState.uploadingProjectName = project.name
-                // Fake upload delay
-                delay(2000)
+                projectRepository.uploadProject(action.projectId)
                 viewState.uploadingProjectName = null
             }
         }

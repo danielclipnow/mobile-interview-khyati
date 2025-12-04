@@ -1,5 +1,7 @@
 package com.example.interview.di
 
+import com.example.interview.api.ApiClient
+import com.example.interview.api.ApiClientImpl
 import com.example.interview.repository.ProjectRepository
 import com.example.interview.screen.projectlist.ProjectListViewModel
 import com.example.interview.screen.projectdetail.ProjectDetailViewModel
@@ -15,8 +17,11 @@ import org.koin.dsl.module
  * Defines all dependency bindings.
  */
 val appModule = module {
+    // API Client
+    single<ApiClient> { ApiClientImpl() }
+
     // Repository - single instance shared across the app
-    single { ProjectRepository() }
+    single { ProjectRepository(apiClient = get()) }
 
     // ViewModels
     viewModel { parameters ->

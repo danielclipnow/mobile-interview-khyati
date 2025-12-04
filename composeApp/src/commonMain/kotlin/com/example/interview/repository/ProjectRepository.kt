@@ -1,9 +1,11 @@
 package com.example.interview.repository
 
+import com.example.interview.api.ApiClient
 import com.example.interview.model.Comment
 import com.example.interview.model.Pano
 import com.example.interview.model.Project
 import com.example.interview.model.Room
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +17,9 @@ import kotlinx.coroutines.flow.asStateFlow
  * so all mutations to rooms, panos, and comments must be done through Project's
  * copyByXyz methods and then saved via this repository.
  */
-class ProjectRepository {
+class ProjectRepository(
+    private val apiClient: ApiClient
+) {
 
     private val _projects = MutableStateFlow<List<Project>>(emptyList())
 
@@ -45,6 +49,17 @@ class ProjectRepository {
         } else {
             currentProjects + project
         }
+    }
+
+    /**
+     * Uploads a project to the server.
+     * TODO: Implement actual upload logic using ApiClient
+     */
+    suspend fun uploadProject(projectId: String) {
+        val project = _projects.value.find { it.id == projectId } ?: return
+        // TODO: Use apiClient to upload project, rooms, panos, and comments
+        // For now, just simulate upload delay
+        delay(2000)
     }
 
     private fun populateSampleData() {
