@@ -32,10 +32,10 @@ class ProjectDetailViewModel(
         data object GoBack : Action()
     }
 
-    override val destination: Destination = savedStateHandle.toRoute<Destination.ProjectDetail>()
+    override val destination: Destination.ProjectDetail = savedStateHandle.toRoute<Destination.ProjectDetail>()
     override var viewState: ViewState = ViewState()
 
-    private val projectId: String = (destination as Destination.ProjectDetail).projectId
+    private val projectId: String = destination.projectId
 
     init {
         projectRepository.projects

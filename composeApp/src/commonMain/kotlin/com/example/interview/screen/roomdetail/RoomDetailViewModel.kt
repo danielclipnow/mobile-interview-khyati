@@ -32,15 +32,16 @@ class RoomDetailViewModel(
         data class AddPano(val imageData: ByteArray) : Action()
         data object RemovePano : Action()
         data object AddComment : Action()
+        data class EditComment(val commentId: String) : Action()
         data object EditRoom : Action()
         data object GoBack : Action()
     }
 
-    override val destination: Destination = savedStateHandle.toRoute<Destination.RoomDetail>()
+    override val destination: Destination.RoomDetail = savedStateHandle.toRoute<Destination.RoomDetail>()
     override var viewState: ViewState = ViewState()
 
-    private val projectId: String = (destination as Destination.RoomDetail).projectId
-    private val roomId: String = (destination as Destination.RoomDetail).roomId
+    private val projectId: String = destination.projectId
+    private val roomId: String = destination.roomId
 
     init {
         projectRepository.projects
@@ -67,9 +68,19 @@ class RoomDetailViewModel(
             }
             Action.AddComment -> {
                 navigator.navigate(
-                    to = Destination.AddComment(
+                    to = Destination.AddOrEditComment(
                         projectId = projectId,
                         roomId = roomId
+                    ),
+                    from = destination
+                )
+            }
+            is Action.EditComment -> {
+                navigator.navigate(
+                    to = Destination.AddOrEditComment(
+                        projectId = projectId,
+                        roomId = roomId,
+                        commentId = action.commentId
                     ),
                     from = destination
                 )

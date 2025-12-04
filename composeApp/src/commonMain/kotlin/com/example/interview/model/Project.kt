@@ -42,6 +42,17 @@ data class Project(
         })
     }
 
+    fun copyByUpdatingCommentInRoom(roomId: String, commentId: String, text: String): Project {
+        return copy(rooms = rooms.map { room ->
+            if (room.id == roomId) {
+                room.copy(comments = room.comments.map { comment ->
+                    if (comment.id == commentId) comment.copy(text = text)
+                    else comment
+                })
+            } else room
+        })
+    }
+
     fun copyByUpdatingName(name: String): Project {
         return copy(name = name)
     }

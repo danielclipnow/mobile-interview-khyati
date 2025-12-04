@@ -99,7 +99,10 @@ fun RoomDetailScreen(
                     }
                 } else {
                     items(room.comments, key = { it.id }) { comment ->
-                        CommentCard(comment = comment)
+                        CommentCard(
+                            comment = comment,
+                            onEdit = { viewModel.send(RoomDetailViewModel.Action.EditComment(comment.id)) }
+                        )
                     }
                 }
             }
@@ -156,15 +159,25 @@ private fun PanoSection(
 }
 
 @Composable
-private fun CommentCard(comment: Comment) {
+private fun CommentCard(
+    comment: Comment,
+    onEdit: () -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Row(
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 text = comment.text,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.weight(1f)
             )
+            IconButton(onClick = onEdit) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit Comment")
+            }
         }
     }
 }

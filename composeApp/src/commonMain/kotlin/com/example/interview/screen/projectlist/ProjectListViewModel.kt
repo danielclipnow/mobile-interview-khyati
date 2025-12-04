@@ -29,7 +29,7 @@ class ProjectListViewModel(
         data class SelectProject(val projectId: String) : Action()
     }
 
-    override val destination: Destination = Destination.ProjectList
+    override val destination: Destination.ProjectList = Destination.ProjectList
     override var viewState: ViewState = ViewState()
 
     init {

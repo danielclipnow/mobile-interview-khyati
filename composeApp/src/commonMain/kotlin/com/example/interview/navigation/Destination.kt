@@ -19,7 +19,11 @@ sealed class Destination {
     data class RoomDetail(val projectId: String, val roomId: String) : Destination()
 
     @Serializable
-    data class AddComment(val projectId: String, val roomId: String) : Destination()
+    data class AddOrEditComment(
+        val projectId: String,
+        val roomId: String,
+        val commentId: String? = null // null = add mode, non-null = edit mode
+    ) : Destination()
 
     @Serializable
     data class AddOrEditRoom(

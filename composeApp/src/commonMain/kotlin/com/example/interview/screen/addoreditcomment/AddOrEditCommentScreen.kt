@@ -1,4 +1,4 @@
-package com.example.interview.screen.addcomment
+package com.example.interview.screen.addoreditcomment
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -12,23 +12,23 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCommentScreen(
-    viewModel: AddCommentViewModel = koinViewModel()
+fun AddOrEditCommentScreen(
+    viewModel: AddOrEditCommentViewModel = koinViewModel()
 ) {
     val viewState = viewModel.viewState
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add Comment") },
+                title = { Text(viewState.screenTitle) },
                 navigationIcon = {
-                    IconButton(onClick = { viewModel.send(AddCommentViewModel.Action.Cancel) }) {
+                    IconButton(onClick = { viewModel.send(AddOrEditCommentViewModel.Action.Cancel) }) {
                         Icon(Icons.Default.Close, contentDescription = "Cancel")
                     }
                 },
                 actions = {
                     TextButton(
-                        onClick = { viewModel.send(AddCommentViewModel.Action.Save) },
+                        onClick = { viewModel.send(AddOrEditCommentViewModel.Action.Save) },
                         enabled = viewState.canSave
                     ) {
                         Text("Save")
@@ -45,7 +45,7 @@ fun AddCommentScreen(
         ) {
             OutlinedTextField(
                 value = viewState.commentText,
-                onValueChange = { viewModel.send(AddCommentViewModel.Action.UpdateText(it)) },
+                onValueChange = { viewModel.send(AddOrEditCommentViewModel.Action.UpdateText(it)) },
                 label = { Text("Comment") },
                 placeholder = { Text("Enter your comment...") },
                 modifier = Modifier

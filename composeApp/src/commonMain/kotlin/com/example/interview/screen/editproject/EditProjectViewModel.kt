@@ -33,10 +33,10 @@ class EditProjectViewModel(
         data object Cancel : Action()
     }
 
-    override val destination: Destination = savedStateHandle.toRoute<Destination.EditProject>()
+    override val destination: Destination.EditProject = savedStateHandle.toRoute<Destination.EditProject>()
     override var viewState: ViewState = ViewState()
 
-    private val projectId: String = (destination as Destination.EditProject).projectId
+    private val projectId: String = destination.projectId
 
     init {
         projectRepository.projects

@@ -13,7 +13,7 @@ import com.example.interview.navigation.NavigatorImpl
 import com.example.interview.screen.projectlist.ProjectListScreen
 import com.example.interview.screen.projectdetail.ProjectDetailScreen
 import com.example.interview.screen.roomdetail.RoomDetailScreen
-import com.example.interview.screen.addcomment.AddCommentScreen
+import com.example.interview.screen.addoreditcomment.AddOrEditCommentScreen
 import com.example.interview.screen.addoreditroom.AddOrEditRoomScreen
 import com.example.interview.screen.editproject.EditProjectScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -50,8 +50,8 @@ fun App() {
                 composable<Destination.RoomDetail> {
                     RoomDetailScreen()
                 }
-                composable<Destination.AddComment> {
-                    AddCommentScreen()
+                composable<Destination.AddOrEditComment> {
+                    AddOrEditCommentScreen()
                 }
                 composable<Destination.AddOrEditRoom> {
                     AddOrEditRoomScreen()
