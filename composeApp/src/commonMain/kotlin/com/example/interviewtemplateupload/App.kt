@@ -14,6 +14,7 @@ import com.example.interview.screen.projectlist.ProjectListScreen
 import com.example.interview.screen.projectdetail.ProjectDetailScreen
 import com.example.interview.screen.roomdetail.RoomDetailScreen
 import com.example.interview.screen.addcomment.AddCommentScreen
+import com.example.interview.screen.addoreditroom.AddOrEditRoomScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.dsl.module
@@ -51,7 +52,9 @@ fun App() {
                 composable<Destination.AddComment> {
                     AddCommentScreen()
                 }
-                // Other destinations will be added in later phases
+                composable<Destination.AddOrEditRoom> {
+                    AddOrEditRoomScreen()
+                }
             }
         }
     }

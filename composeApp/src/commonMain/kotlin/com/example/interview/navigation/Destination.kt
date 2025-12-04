@@ -20,4 +20,10 @@ sealed class Destination {
 
     @Serializable
     data class AddComment(val projectId: String, val roomId: String) : Destination()
+
+    @Serializable
+    data class AddOrEditRoom(
+        val projectId: String,
+        val roomId: String? = null // null = add mode, non-null = edit mode
+    ) : Destination()
 }

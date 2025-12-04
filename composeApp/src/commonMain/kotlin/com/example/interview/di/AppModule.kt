@@ -5,6 +5,7 @@ import com.example.interview.screen.projectlist.ProjectListViewModel
 import com.example.interview.screen.projectdetail.ProjectDetailViewModel
 import com.example.interview.screen.roomdetail.RoomDetailViewModel
 import com.example.interview.screen.addcomment.AddCommentViewModel
+import com.example.interview.screen.addoreditroom.AddOrEditRoomViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -43,6 +44,14 @@ val appModule = module {
 
     viewModel { parameters ->
         AddCommentViewModel(
+            savedStateHandle = parameters.get(),
+            navigator = get(),
+            projectRepository = get()
+        )
+    }
+
+    viewModel { parameters ->
+        AddOrEditRoomViewModel(
             savedStateHandle = parameters.get(),
             navigator = get(),
             projectRepository = get()

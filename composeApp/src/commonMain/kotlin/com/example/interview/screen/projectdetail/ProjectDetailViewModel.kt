@@ -7,7 +7,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.interview.model.Project
-import com.example.interview.model.Room
 import com.example.interview.navigation.Destination
 import com.example.interview.navigation.Navigator
 import com.example.interview.repository.ProjectRepository
@@ -48,10 +47,10 @@ class ProjectDetailViewModel(
     override suspend fun handle(action: Action) {
         when (action) {
             Action.AddRoom -> {
-                val project = viewState.project ?: return
-                val newRoom = Room.make(name = "Room ${project.rooms.size + 1}")
-                val updatedProject = project.copyByAddingRoom(newRoom)
-                projectRepository.save(updatedProject)
+                navigator.navigate(
+                    to = Destination.AddOrEditRoom(projectId = projectId),
+                    from = destination
+                )
             }
             is Action.SelectRoom -> {
                 navigator.navigate(

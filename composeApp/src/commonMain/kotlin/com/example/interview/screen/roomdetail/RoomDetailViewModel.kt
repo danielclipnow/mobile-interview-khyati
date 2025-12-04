@@ -31,6 +31,7 @@ class RoomDetailViewModel(
     sealed class Action {
         data class AddPano(val imageData: ByteArray) : Action()
         data object AddComment : Action()
+        data object EditRoom : Action()
         data object GoBack : Action()
     }
 
@@ -63,6 +64,15 @@ class RoomDetailViewModel(
             Action.AddComment -> {
                 navigator.navigate(
                     to = Destination.AddComment(
+                        projectId = projectId,
+                        roomId = roomId
+                    ),
+                    from = destination
+                )
+            }
+            Action.EditRoom -> {
+                navigator.navigate(
+                    to = Destination.AddOrEditRoom(
                         projectId = projectId,
                         roomId = roomId
                     ),

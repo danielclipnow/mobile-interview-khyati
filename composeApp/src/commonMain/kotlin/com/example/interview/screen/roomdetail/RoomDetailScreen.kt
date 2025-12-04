@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -32,6 +33,11 @@ fun RoomDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = { viewModel.send(RoomDetailViewModel.Action.GoBack) }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { viewModel.send(RoomDetailViewModel.Action.EditRoom) }) {
+                        Icon(Icons.Default.Edit, contentDescription = "Edit Room")
                     }
                 }
             )
