@@ -56,9 +56,7 @@ class RoomDetailViewModel(
             is Action.AddPano -> {
                 val project = projectRepository.projects.value.find { it.id == projectId } ?: return
                 val pano = Pano(id = Uuid.random().toString(), imageData = action.imageData)
-                val updatedProject = project.copyByUpdatingRoom(roomId) { room ->
-                    room.copyBySettingPano(pano)
-                }
+                val updatedProject = project.copyBySettingPanoToRoom(roomId, pano)
                 projectRepository.save(updatedProject)
             }
             Action.AddComment -> {

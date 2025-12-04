@@ -14,8 +14,25 @@ data class Project(
         return copy(rooms = rooms + room)
     }
 
-    fun copyByUpdatingRoom(roomId: String, updater: (Room) -> Room): Project {
-        return copy(rooms = rooms.map { if (it.id == roomId) updater(it) else it })
+    fun copyByAddingCommentToRoom(roomId: String, comment: Comment): Project {
+        return copy(rooms = rooms.map { room ->
+            if (room.id == roomId) room.copy(comments = room.comments + comment)
+            else room
+        })
+    }
+
+    fun copyBySettingPanoToRoom(roomId: String, pano: Pano): Project {
+        return copy(rooms = rooms.map { room ->
+            if (room.id == roomId) room.copy(pano = pano)
+            else room
+        })
+    }
+
+    fun copyByUpdatingRoomName(roomId: String, name: String): Project {
+        return copy(rooms = rooms.map { room ->
+            if (room.id == roomId) room.copy(name = name)
+            else room
+        })
     }
 
     companion object {

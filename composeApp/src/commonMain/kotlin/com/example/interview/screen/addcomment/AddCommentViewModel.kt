@@ -53,9 +53,7 @@ class AddCommentViewModel(
                     id = Uuid.random().toString(),
                     text = viewState.commentText.trim()
                 )
-                val updatedProject = project.copyByUpdatingRoom(roomId) { room ->
-                    room.copyByAddingComment(comment)
-                }
+                val updatedProject = project.copyByAddingCommentToRoom(roomId, comment)
                 projectRepository.save(updatedProject)
                 navigator.goBack()
             }

@@ -52,22 +52,14 @@ class ProjectRepository {
         val sampleProject1 = Project.make(
             name = "123 Main St - Water Damage",
             id = "sample-project-1"
-        ).let { project ->
-            val room1 = Room.make(name = "Living Room", id = "room-1")
-                .copyBySettingPano(Pano(id = "pano-1", imageData = byteArrayOf(1, 2, 3)))
-                .copyByAddingComment(Comment(id = "comment-1", text = "Water stain visible on ceiling"))
-                .copyByAddingComment(Comment(id = "comment-2", text = "Carpet is damp near window"))
-
-            val room2 = Room.make(name = "Kitchen", id = "room-2")
-                .copyByAddingComment(Comment(id = "comment-3", text = "Under sink damage observed"))
-
-            val room3 = Room.make(name = "Master Bedroom", id = "room-3")
-
-            project
-                .copyByAddingRoom(room1)
-                .copyByAddingRoom(room2)
-                .copyByAddingRoom(room3)
-        }
+        )
+            .copyByAddingRoom(Room.make(name = "Living Room", id = "room-1"))
+            .copyByAddingRoom(Room.make(name = "Kitchen", id = "room-2"))
+            .copyByAddingRoom(Room.make(name = "Master Bedroom", id = "room-3"))
+            .copyBySettingPanoToRoom("room-1", Pano(id = "pano-1", imageData = byteArrayOf(1, 2, 3)))
+            .copyByAddingCommentToRoom("room-1", Comment(id = "comment-1", text = "Water stain visible on ceiling"))
+            .copyByAddingCommentToRoom("room-1", Comment(id = "comment-2", text = "Carpet is damp near window"))
+            .copyByAddingCommentToRoom("room-2", Comment(id = "comment-3", text = "Under sink damage observed"))
 
         // Sample Project 2: Empty project for testing
         val sampleProject2 = Project.make(

@@ -9,14 +9,6 @@ data class Room(
     val pano: Pano? = null,
     val comments: List<Comment> = emptyList()
 ) {
-    fun copyByAddingComment(comment: Comment): Room {
-        return copy(comments = comments + comment)
-    }
-
-    fun copyBySettingPano(pano: Pano): Room {
-        return copy(pano = pano)
-    }
-
     companion object {
         @OptIn(ExperimentalUuidApi::class)
         fun make(name: String, id: String = Uuid.random().toString()): Room {

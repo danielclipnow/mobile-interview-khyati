@@ -74,9 +74,7 @@ class AddOrEditRoomViewModel(
 
                 val updatedProject = if (roomId != null) {
                     // Edit mode - update existing room's name
-                    project.copyByUpdatingRoom(roomId) { room ->
-                        room.copy(name = trimmedName)
-                    }
+                    project.copyByUpdatingRoomName(roomId, trimmedName)
                 } else {
                     // Add mode - create new room
                     val newRoom = Room.make(name = trimmedName)
