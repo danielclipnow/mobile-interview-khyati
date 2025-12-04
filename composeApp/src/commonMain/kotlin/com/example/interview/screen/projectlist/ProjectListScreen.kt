@@ -6,11 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
+import com.example.interview.model.Project
 import com.example.interview.viewmodel.send
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -20,6 +23,11 @@ fun ProjectListScreen(
     viewModel: ProjectListViewModel = koinViewModel()
 ) {
     val viewState = viewModel.viewState
+
+    // Upload progress dialog
+    viewState.uploadingProjectName?.let { projectName ->
+        UploadingDialog(projectName = projectName)
+    }
 
     Scaffold(
         topBar = {
@@ -51,6 +59,9 @@ fun ProjectListScreen(
                         project = project,
                         onClick = {
                             viewModel.send(ProjectListViewModel.Action.SelectProject(project.id))
+                        },
+                        onUpload = {
+                            viewModel.send(ProjectListViewModel.Action.UploadProject(project.id))
                         }
                     )
                 }
@@ -61,23 +72,60 @@ fun ProjectListScreen(
 
 @Composable
 private fun ProjectCard(
-    project: com.example.interview.model.Project,
-    onClick: () -> Unit
+    project: Project,
+    onClick: () -> Unit,
+    onUpload: () -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = project.name,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "${project.rooms.size} rooms",
-                style = MaterialTheme.typography.bodyMedium
-            )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 12.dp, end = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = project.name,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "${project.rooms.size} rooms",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            IconButton(onClick = onUpload) {
+                Icon(Icons.Default.CloudUpload, contentDescription = "Upload Project")
+            }
         }
     }
+}
+
+@Composable
+private fun UploadingDialog(projectName: String) {
+    AlertDialog(
+        onDismissRequest = { /* Non-dismissable */ },
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        ),
+        title = {
+            Text("Uploading Project")
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                CircularProgressIndicator()
+                Text(
+                    text = projectName,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        },
+        confirmButton = { /* No buttons - auto-dismisses */ }
+    )
 }
